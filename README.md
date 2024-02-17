@@ -1,12 +1,17 @@
 # wps-office-secure
+
 Run WPS Office for Linux with Firejail for enhanced security.
 
 ## Prerequisites
+
 Required: linux kernel >=3.5, sudo, firejail
+
 Optional: apt-get
 
 ## Quick Start
+
 Make sure WPS Office for Linux is installed first.
+
 ```bash
 git clone https://github.com/rashlight/wps-office-secure
 cd wps-office-secure
@@ -14,6 +19,7 @@ cd wps-office-secure
 ```
 
 ## Usage
+
 ```
 ./run.sh OPTION
 OPTION can be one of the following:
@@ -23,6 +29,7 @@ OPTION can be one of the following:
 ```
 
 ## Troubleshooting
+
 Some formula symbols might not be displayed correctly due to missing fonts [...]
  - System and user fonts are still loaded. However, additional special fonts needed might not be installed.
  - [dv-anomaly/ttf-wps-fonts](https://github.com/dv-anomaly/ttf-wps-fonts) is a simple way to install these.
