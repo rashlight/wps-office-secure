@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# WPS PDF wrapper from wps-office-secure
+
+if ! command -v firejail &> /dev/null; then
+	logger -is --priority user.warning --tag wpspdf "Firejail not found, running wpspdf anyway with no sandbox."
+	/usr/bin/wpspdf
+else
+	firejail /usr/bin/wpspdf
+fi

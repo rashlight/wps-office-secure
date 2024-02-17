@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# WPS Writer wrapper from wps-office-secure
+
+if ! command -v firejail &> /dev/null; then
+	logger -is --priority user.warning --tag wps "Firejail not found, running wps anyway with no sandbox."
+	/usr/bin/wps
+else
+	firejail /usr/bin/wps
+fi
