@@ -2,12 +2,12 @@
 # wps-office-secure: Run WPS Office for Linux with Firejail for enhanced security.
 # Copyright 2024 An Van Quoc (rashlight)
 
-PROFILES=("wps" "et" "wpp" "wpspdf")
+PROFILES=("wps.profile" "et.profile" "wpp.profile" "wpspdf.profile")
 WRAPPERS=("wps" "et" "wpp" "wpspdf")
 DESKTOP_ENTRIES=("wps-office-wps" "wps-office-et" "wps-office-wpp" "wps-office-pdf" "wps-office-prometheus" )
 ERROR_COUNT=0
 ERROR_MSG=""
-STATUS="complete"
+STATUS="complete."
 
 fail() {
 	echo "$1 failed to $2!"
@@ -69,7 +69,7 @@ prog_install() {
 
 	echo "Installing profiles..."
 	for _PROFILE in "${PROFILES[@]}"; do
-        sudo cp "profiles/$_PROFILE.profile" "/etc/firejail/"
+        sudo bash -c "cp \"profiles/$_PROFILE\" \"/etc/firejail/\" && chmod 644 \"/etc/firejail/$_PROFILE\""
         RESULT=$?
         if [ $RESULT != 0 ]; then
         	fail "profiles/$_PROFILE.profile" "install"
@@ -79,7 +79,7 @@ prog_install() {
 
 	echo "Installing wrappers..."
 	for _WRAPPER in "${WRAPPERS[@]}"; do
-        sudo cp "wrappers/$_WRAPPER" "/usr/local/bin/"
+        sudo bash -c "cp \"wrappers/$_WRAPPER\" \"/usr/local/bin/\" && chmod 755 \"/usr/local/bin/$_WRAPPER\""
         RESULT=$?
         if [ $RESULT != 0 ]; then
         	fail "wrappers/$_WRAPPER" "install"
@@ -112,11 +112,10 @@ prog_install() {
 	done
 
 	if [ $ERROR_COUNT != 0 ]; then
-		STATUS="incomplete"
-		ERROR_MSG="Please check the above messages for errors and fix/clean any remaining files."
+		STATUS="incomplete, $ERROR_COUNT errors found. Please check the above messages and fix/clean any remaining files."
 	fi
 
-	echo "Installation $STATUS, $ERROR_COUNT errors found. $ERROR_MSG"
+	echo "Installation $STATUS"
 }
 
 prog_uninstall() {
@@ -184,11 +183,10 @@ prog_uninstall() {
 	done
 
 	if [ $ERROR_COUNT != 0 ]; then
-		STATUS="incomplete"
-		ERROR_MSG="Please check the above messages for errors and fix/clean any remaining files."
+		STATUS="incomplete, $ERROR_COUNT errors found. Please check the above messages and fix/clean any remaining files."
 	fi
 
-	echo "Uninstallation $STATUS, $ERROR_COUNT errors found. $ERROR_MSG"
+	echo "Uninstallation $STATUS"
 }
 
 prog_help() {
