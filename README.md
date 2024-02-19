@@ -2,6 +2,10 @@
 
 Run WPS Office for Linux with Firejail for enhanced security.
 
+## Demo
+
+![wps-office-secure demo](.github/demo-mini.gif)
+
 ## Prerequisites
 
 Required: linux kernel >=3.5, sudo, firejail
