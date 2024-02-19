@@ -91,23 +91,23 @@ prog_install() {
 	for _ENTRY in "${DESKTOP_ENTRIES[@]}"; do
 		if [ -e "/usr/share/applications/$_ENTRY.desktop" ]; then
 			sudo sed -i 's|/usr/bin|/usr/local/bin|' "/usr/share/applications/$_ENTRY.desktop"
+			RESULT=$?
+        	if [ $RESULT != 0 ]; then
+        		fail "$_ENTRY" "configure"
+        		ERROR_COUNT=$(($ERROR_COUNT + 1))
+        	fi
 		fi
-        RESULT=$?
-        if [ $RESULT != 0 ]; then
-        	fail "$_ENTRY" "configure"
-        	ERROR_COUNT=$(($ERROR_COUNT + 1))
-        fi
 	done
 
 	echo "Configuring desktop files..."
 	for _ENTRY in "${DESKTOP_ENTRIES[@]}"; do
 		if [ -e "$HOME/Desktop/$_ENTRY.desktop" ]; then
         	sudo sed -i 's|/usr/bin|/usr/local/bin|' "$HOME/Desktop/$_ENTRY.desktop"
-        fi
-        RESULT=$?
-        if [ $RESULT != 0 ]; then
-        	fail "$_ENTRY" "configure"
-        	ERROR_COUNT=$(($ERROR_COUNT + 1))
+        	RESULT=$?
+        	if [ $RESULT != 0 ]; then
+        		fail "$_ENTRY" "configure"
+        		ERROR_COUNT=$(($ERROR_COUNT + 1))
+        	fi
         fi
 	done
 
@@ -140,11 +140,11 @@ prog_uninstall() {
 	for _ENTRY in "${DESKTOP_ENTRIES[@]}"; do
 		if [ -e "$HOME/Desktop/$_ENTRY.desktop" ]; then
         	sudo sed -i 's|/usr/local/bin|/usr/bin|' "$HOME/Desktop/$_ENTRY.desktop"
-        fi
-        RESULT=$?
-        if [ $RESULT != 0 ]; then
-        	fail "$_ENTRY" "revert"
-        	ERROR_COUNT=$(($ERROR_COUNT + 1))
+        	RESULT=$?
+        	if [ $RESULT != 0 ]; then
+        		fail "$_ENTRY" "revert"
+        		ERROR_COUNT=$(($ERROR_COUNT + 1))
+        	fi
         fi
 	done
 
@@ -152,33 +152,36 @@ prog_uninstall() {
 	for _ENTRY in "${DESKTOP_ENTRIES[@]}"; do
 		if [ -e "/usr/share/applications/$_ENTRY.desktop" ]; then
         	sudo sed -i 's|/usr/local/bin|/usr/bin|' "/usr/share/applications/$_ENTRY.desktop"
+        	RESULT=$?
+        	if [ $RESULT != 0 ]; then
+        		fail "$_ENTRY" "revert"
+        		ERROR_COUNT=$(($ERROR_COUNT + 1))
+        	fi
         fi
-        RESULT=$?
-        if [ $RESULT != 0 ]; then
-        	fail "$_ENTRY" "revert"
-        	ERROR_COUNT=$(($ERROR_COUNT + 1))
-        fi
+
 	done
 
 	echo "Removing wrappers..."
 	for _WRAPPER in "${WRAPPERS[@]}"; do
-		# rm does not error out when file not exists, so no checking here
-        sudo rm "/usr/local/bin/$_WRAPPER"
-        RESULT=$?
-        if [ $RESULT != 0 ]; then
-        	fail "wrappers/$_WRAPPER" "remove"
-        	ERROR_COUNT=$(($ERROR_COUNT + 1))
+		if [ -e "/usr/local/bin/$_WRAPPER" ]; then
+        	sudo rm "/usr/local/bin/$_WRAPPER"
+        	RESULT=$?
+        	if [ $RESULT != 0 ]; then
+        		fail "wrappers/$_WRAPPER" "remove"
+        		ERROR_COUNT=$(($ERROR_COUNT + 1))
+        	fi
         fi
 	done
 
 	echo "Removing profiles..."
 	for _PROFILE in "${PROFILES[@]}"; do
-		# rm does not error out when file not exists, so no checking here
-        sudo rm "/etc/firejail/$_PROFILE"
-        RESULT=$?
-        if [ $RESULT != 0 ]; then
-        	fail "profiles/$_PROFILE" "remove"
-        	ERROR_COUNT=$(($ERROR_COUNT + 1))
+		if [ -e "/etc/firejail/$_PROFILE" ]; then
+        	sudo rm "/etc/firejail/$_PROFILE"
+       		RESULT=$?
+        	if [ $RESULT != 0 ]; then
+        		fail "profiles/$_PROFILE" "remove"
+        		ERROR_COUNT=$(($ERROR_COUNT + 1))
+        	fi
         fi
 	done
 
