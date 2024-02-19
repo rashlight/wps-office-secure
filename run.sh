@@ -72,7 +72,7 @@ prog_install() {
         sudo bash -c "cp \"profiles/$_PROFILE\" \"/etc/firejail/\" && chmod 644 \"/etc/firejail/$_PROFILE\""
         RESULT=$?
         if [ $RESULT != 0 ]; then
-        	fail "profiles/$_PROFILE.profile" "install"
+        	fail "profiles/$_PROFILE" "install"
         	ERROR_COUNT=$(($ERROR_COUNT + 1))
         fi
 	done
@@ -174,10 +174,10 @@ prog_uninstall() {
 	echo "Removing profiles..."
 	for _PROFILE in "${PROFILES[@]}"; do
 		# rm does not error out when file not exists, so no checking here
-        sudo rm "/etc/firejail/$_PROFILE.profile"
+        sudo rm "/etc/firejail/$_PROFILE"
         RESULT=$?
         if [ $RESULT != 0 ]; then
-        	fail "profiles/$_PROFILE.profile" "remove"
+        	fail "profiles/$_PROFILE" "remove"
         	ERROR_COUNT=$(($ERROR_COUNT + 1))
         fi
 	done

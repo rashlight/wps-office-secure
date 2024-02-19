@@ -6,5 +6,5 @@ if ! command -v firejail &> /dev/null; then
 	logger -is --priority user.warning --tag wpp "Firejail not found, running wpp anyway with no sandbox."
 	/usr/bin/wpp
 else
-	firejail /usr/bin/wpp
+	firejail /usr/bin/wpp "$@"
 fi

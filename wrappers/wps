@@ -6,5 +6,5 @@ if ! command -v firejail &> /dev/null; then
 	logger -is --priority user.warning --tag wps "Firejail not found, running wps anyway with no sandbox."
 	/usr/bin/wps
 else
-	firejail /usr/bin/wps
+	firejail /usr/bin/wps "$@"
 fi
