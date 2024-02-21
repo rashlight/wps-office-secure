@@ -6,15 +6,19 @@ Run WPS Office for Linux with Firejail for enhanced security.
 
 ![wps-office-secure demo](.github/demo-mini.gif)
 
+## Features
+
+ - Disable internet connection
+ - Limit access to memory execution
+ - Integration with AppArmor
+
 ## Prerequisites
 
-Required: linux kernel >=3.5, sudo, firejail
+Required: WPS Office (.deb or .rpm), linux kernel >=3.5, sudo, firejail
 
 Optional: apt-get
 
 ## Quick Start
-
-Make sure WPS Office for Linux is installed first.
 
 ```bash
 git clone https://github.com/rashlight/wps-office-secure
@@ -24,7 +28,7 @@ cd wps-office-secure
 
 ## Usage
 
-```
+```bash
 ./run.sh OPTION
 OPTION can be one of the following:
 	install: perform installation
@@ -34,9 +38,16 @@ OPTION can be one of the following:
 
 ## Troubleshooting
 
-Some formula symbols might not be displayed correctly due to missing fonts [...]
+Installation/Uninstallation incomplete, X errors occurred.
+ - Look at the error messages above for insights.
+ - If you don't know how to fix those issues, try running ```./run.sh uninstall``` to revert to normal.
+
+Some formula symbols might not be displayed correctly due to missing fonts.
  - System and user fonts are still loaded. However, additional special fonts needed might not be installed.
  - [dv-anomaly/ttf-wps-fonts](https://github.com/dv-anomaly/ttf-wps-fonts) is a simple way to install these.
 
-Installation/Uninstallation incomplete, <x> errors occurred.
- - Look at the printed messages above for more information.
+Desktop shortcuts does not launch wrapper when window manage mode is changed.
+ - Run ```./run.sh install``` again for each time.
+
+WPS Office crashes when opening a file.
+ - Relaunch app or open the file again. This should only happen once per computer startup.
