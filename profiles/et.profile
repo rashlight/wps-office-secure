@@ -17,3 +17,7 @@ net none
 seccomp
 # Drop syscalls from memory-deny-write-execute without breakage
 seccomp.drop pkey_mprotect,memfd_create,shmat
+
+dbus-user filter
+dbus-user.talk org.freedesktop.portal.Fcitx
+ignore dbus-user none

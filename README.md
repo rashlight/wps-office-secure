@@ -49,5 +49,13 @@ Some formula symbols might not be displayed correctly due to missing fonts.
 Desktop shortcuts does not launch wrapper when window manage mode is changed.
  - Run ```./run.sh install``` again for each time.
 
+I cannot see Fcitx preedit text when typing. (see [this issue](https://github.com/fcitx/fcitx/issues/466))
+ - Right-click on Fcitx (the keyboard) icon on the taskbar, select "Configure"
+ - Select the "Addon" tab, click on "Advanced" checkbox
+ - Search for "Fcitx XIM frontend", click on it and click "Configure" button
+ - Enable "Use On The Spot Style for XIM"
+ - Press OK and restart Fcitx.
+ - Change between preedit mode by "Ctrl+Alt+P" when in **Inactive state**.
+
 WPS Office crashes when opening a file.
  - Relaunch app or open the file again. This should only happen once per computer startup.
