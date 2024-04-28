@@ -4,7 +4,7 @@
 
 if ! command -v firejail &> /dev/null; then
 	logger -is --priority user.warning --tag et "Firejail not found, running et anyway with no sandbox."
-	/usr/bin/et
+	/usr/bin/et "$@"
 else
 	firejail /usr/bin/et "$@"
 fi
